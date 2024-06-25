@@ -23,11 +23,7 @@ logger.addHandler(file_handler)
 
 load_dotenv()
 
-if not os.path.exists('static'):
-    os.makedirs('static')
-
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 try:
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -73,12 +69,11 @@ async def interview_validate(request: Request, bot_config: BotConfig):
         chat_response = get_chat_response(user_message, bot_config)
         tts_status = text_to_speech(chat_response['response'])
 
-        audio_file_path = "static/response.mp3"
+        audio_file_path = "response.mp3"
         with open(audio_file_path, "rb") as audio_file:
             audio_content = audio_file.read()
 
         audio_base64 = base64.b64encode(audio_content).decode('utf-8')
-        download_url = str(request.base_url) + audio_file_path
         end_time = time.time()
 
         return JSONResponse(
@@ -91,12 +86,12 @@ async def interview_validate(request: Request, bot_config: BotConfig):
                     "content": chat_response
                 },
                 "tts": {
-                    "audio_url": download_url,
                     "audio_base64": audio_base64,
                     "tts_status": tts_status
                 }
             }
         )
+    
     except Exception as e:
         logger.error(f"Error in post_audio: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
