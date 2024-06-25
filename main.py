@@ -74,11 +74,11 @@ async def interview_validate(request: Request, bot_config: BotConfig):
         tts_status = text_to_speech(chat_response['response'])
 
         audio_file_path = "static/response.mp3"
-        with open("audio_file_path", "rb") as audio_file:
+        with open(audio_file_path, "rb") as audio_file:
             audio_content = audio_file.read()
 
         audio_base64 = base64.b64encode(audio_content).decode('utf-8')
-        download_url = str(request.base_url) + 'static/response.mp3'
+        download_url = str(request.base_url) + audio_file_path
         end_time = time.time()
 
         return JSONResponse(
