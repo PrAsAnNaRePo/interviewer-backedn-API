@@ -1,6 +1,7 @@
 import tempfile
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import time
 from prompt_template import SYSTEM_PROMPT
@@ -23,6 +24,9 @@ logger.addHandler(file_handler)
 load_dotenv()
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+os.makedirs('static', exist_ok=True)
 
 try:
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -68,11 +72,12 @@ async def interview_validate(request: Request, bot_config: BotConfig):
         chat_response = get_chat_response(user_message, bot_config)
         tts_status = text_to_speech(chat_response['response'])
 
-        with open("response.mp3", "rb") as audio_file:
+        audio_file_path = "static/response.mp3"
+        with open("audio_file_path", "rb") as audio_file:
             audio_content = audio_file.read()
 
         audio_base64 = base64.b64encode(audio_content).decode('utf-8')
-        download_url = f"{request.base_url}response.mp3"
+        download_url = str(request.base_url) + 'static/response.mp3'
         end_time = time.time()
 
         return JSONResponse(
