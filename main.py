@@ -72,7 +72,7 @@ async def interview_validate(request: Request, bot_config: BotConfig):
             audio_content = audio_file.read()
 
         audio_base64 = base64.b64encode(audio_content).decode('utf-8')
-        download_url = f"{request.base_url}static/response.mp3"
+        download_url = f"{request.base_url}response.mp3"
         end_time = time.time()
 
         return JSONResponse(
