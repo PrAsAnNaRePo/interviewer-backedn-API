@@ -23,10 +23,11 @@ logger.addHandler(file_handler)
 
 load_dotenv()
 
+if not os.path.exists('static'):
+    os.makedirs('static')
+
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
-os.makedirs('static', exist_ok=True)
 
 try:
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
