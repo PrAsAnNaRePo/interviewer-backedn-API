@@ -1,0 +1,12 @@
+__pycache__
+.venv
+.env
+alloy.wav
+
+app.log
+
+conversation.json
+response.mp3
+sample_req.json
+
+st_app.py

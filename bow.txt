@@ -1,0 +1,36 @@
+Should
+Could
+Will
+Would
+Might
+Must
+Can
+May
+Shall
+Have to
+Need to
+Ought to
+Going to
+Planning to
+Expected to
+Supposed to
+Able to
+Likely to
+Possible
+Necessary
+Required
+Essential
+Optional
+Recommended
+Advised
+Permitted
+Allowed
+Forbidden
+Prohibited
+Suggested
+Encouraged
+Discouraged
+Optional
+Compulsory
+Voluntary
+Mandatory
